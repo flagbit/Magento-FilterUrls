@@ -32,7 +32,7 @@
  * @version 0.1.0
  * @since 0.1.0
  */
-class Flagbit_FilterUrls_Model_Mysql4_Glossary_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract {
+class Flagbit_FilterUrls_Model_Resource_Mysql4_Rewrite_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract {
 
     /**
      * Constructor

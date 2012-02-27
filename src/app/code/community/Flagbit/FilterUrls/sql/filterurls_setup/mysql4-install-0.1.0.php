@@ -29,11 +29,13 @@ $installer->run("
 -- DROP TABLE IF EXISTS {$this->getTable('filterurls/rewrite')};
 CREATE TABLE IF NOT EXISTS {$this->getTable('filterurls/rewrite')} (
   `rewrite_id` int(10) unsigned NOT NULL auto_increment,
-  `attribute_code` tinytext NOT NULL default '',
+  `attribute_code` varchar(30) NOT NULL default '',
   `option_id` int(10) unsigned NOT NULL,
-  `rewrite` tinytext NOT NULL default '',
+  `rewrite` varchar(40) NOT NULL default '',
   `store_id` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`rewrite_id`),
+  CONSTRAINT `UNQ_FILTERURLS_REWRITE_ATTRIBUTECODE_OPTIONID` UNIQUE (`attribute_code`, `option_id`),
+  CONSTRAINT `UNQ_FILTERURLS_REWRITE_REWRITE` UNIQUE (`rewrite`),
   CONSTRAINT `FK_FILTERURLS_REWRITE_STORE` FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}` (`store_id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Rewrite values for attribute options' AUTO_INCREMENT=1;
 ");

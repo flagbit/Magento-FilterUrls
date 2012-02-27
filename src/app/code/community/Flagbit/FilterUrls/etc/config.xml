@@ -2,8 +2,6 @@
 <config>
     <modules>
         <Flagbit_FilterUrls>
-            <active>true</active>
-            <codePool>local</codePool>
             <version>0.1.0</version>
         </Flagbit_FilterUrls>
     </modules>

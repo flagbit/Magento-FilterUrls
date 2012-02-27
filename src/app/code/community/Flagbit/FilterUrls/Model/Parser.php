@@ -76,16 +76,17 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
         
         // try to translate filter option values to request parameters using the rewrite models
         $params = array();
-        foreach ($filterInfos as $filterInfo) {
-            $rewrite = Mage::getModel('filterurls/rewrite')
-                ->loadByRewriteString($filterInfo);
-            
-            if ($rewrite->getId()) {
+        $rewriteCollection = Mage::getModel('filterurls/rewrite')
+            ->getCollection()
+            ->addFieldToFilter('rewrite', array('in' => $filterInfos));
+        
+        if (count($rewriteCollection) == count($filterInfos)) {
+            foreach ($rewriteCollection as $rewrite) {
                 $params[$rewrite->getAttributeCode()] = $rewrite->getOptionId();
             }
-            else {
-                return false;
-            }
+        }
+        else {
+            return false;
         }
         
         // return structured result
