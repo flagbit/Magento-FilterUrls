@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Magento-FilterUrls" basedir=".">
+ 
+    <property file="build.properties"/>
+    <property file="build.default.properties"/>
+    <property name="srcdir" value="${basedir}/src"/>
+    <property name="vagrantdir" value="${basedir}/.vagrant"/>
+
+    <target name="02 vagrant up">
+          <exec dir="${vagrantdir}" executable="cmd">
+              <arg line="/c vagrant up"/>
+          </exec>
+    </target>
+ 
+    <target name="03 vagrant reload">
+          <exec dir="${vagrantdir}" executable="cmd">
+              <arg line="/c vagrant reload"/>
+          </exec>
+    </target>
+    
+    <target name="04 vagrant suspend">
+          <exec dir="${vagrantdir}" executable="cmd">
+              <arg line="/c vagrant halt"/>
+          </exec>
+    </target>
+    
+    <target name="05 vagrant resume">
+          <exec dir="${vagrantdir}" executable="cmd">
+              <arg line="/c vagrant halt"/>
+          </exec>
+    </target>
+
+    <target name="06 vagrant halt">
+          <exec dir="${vagrantdir}" executable="cmd">
+              <arg line="/c vagrant halt"/>
+          </exec>
+    </target>
+</project>

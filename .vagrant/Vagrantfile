@@ -1,0 +1,15 @@
+Vagrant::Config.run do |config|
+	config.vm.box = "debian-squeeze-64-magento"
+	config.vm.box_url = "http://web13.site.flagbit.com/mageinstall/debian-squeeze-64-magento" 
+	
+	config.ssh.host = "127.0.0.1"
+	config.vm.forward_port("ssh", 22, 2222, :auto => true)
+	config.vm.forward_port("www", 80, 8080, :auto => true)
+	config.vm.share_folder("www", "/usr/local/src/magento/deployment/", "../src/")
+	config.vm.share_folder("vagrant", "/usr/local/src/vagrant/", "../.vagrant/")
+	
+	config.vm.customize do |vm|
+		vm.memory_size = 1024
+		vm.name = "Vagrant FilterUrls"
+	end
+end
