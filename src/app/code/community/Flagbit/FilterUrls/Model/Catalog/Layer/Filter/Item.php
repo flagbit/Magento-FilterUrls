@@ -96,12 +96,12 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
         ksort($filterUrlArray['filterUrl']);
         $filterUrlString = implode('-', $filterUrlArray['filterUrl']);
         
-        $url = parse_url($category->getUrl());
-        $url = trim($url['path'], '/');
+        $url = str_replace(Mage::getStoreConfig('web/unsecure/base_url'), '', $category->getUrl());
+        $url = preg_replace('/\?.*/', '', $url);
         
         if (!empty($filterUrlString)) {
             $configUrlSuffix = Mage::getStoreConfig('catalog/seo/category_url_suffix');
-        
+            
             if (substr($url, -strlen($configUrlSuffix)) == $configUrlSuffix) {
                 $url = substr($url, 0, -strlen($configUrlSuffix));
             }

@@ -57,7 +57,7 @@ class Flagbit_FilterUrls_Model_Rewrite extends Mage_Core_Model_Abstract
         $this->getResource()->loadByFilterOption($this, $filter->getAttributeModel()->getAttributeCode(), $optionId);
         
         if (!$this->getId()) {
-            $this->generateNewRewrite($filter, $optionId);
+            $this->generateNewRewrite($filter, $optionId, Mage::app()->getStore()->getId());
         }
         
         return $this;
@@ -73,22 +73,27 @@ class Flagbit_FilterUrls_Model_Rewrite extends Mage_Core_Model_Abstract
      * 
      * @param Mage_Catalog_Model_Layer_Filter_Attribute $filter The given attribute Filter.
      * @param int $optionId The wanted option id.
+     * @param int $storeId Id of the currently active store
      * @return Flagbit_FilterUrls_Model_Rewrite|false On success Self, otherwise false.
      */
-    public function generateNewRewrite($filter, $optionId)
+    public function generateNewRewrite($filter, $optionId, $storeId)
     {
         if (empty($filter) || !(int) $optionId) {
             return FALSE;
         }
         
         // load option from option_id
-        $option = Mage::getResourceModel('eav/entity_attribute_option_collection')
-                ->setIdFilter($optionId)
-                ->setStoreFilter($storeId, true)
-                ->getFirstItem();
+        $optionCollection = Mage::getResourceModel('eav/entity_attribute_option_collection')
+                ->setStoreFilter($storeId, true);
+        
+        // normally this should be done using the setIdFilter option of the collection. Unfortunately this results in an
+        // error in Magento version 1.6.2.0
+        $optionCollection->getSelect()->where('`main_table`.`option_id` = ?', $optionId);
+        $option = $optionCollection->getFirstItem();
         
         // get all currently filterable attributes
-        $filterableAttributes = Mage::getSingleton('catalog/layer')->getFilterableAttributes()->getItems();
+        $category = Mage::registry('current_category');
+        $filterableAttributes = Mage::getSingleton('filterurls/catalog_layer')->setCurrentCategory($category)->getFilterableAttributes()->getItems();
         
         // failure, if current attribute not filterable or the option does not belong to the given attribute model
         if (!in_array($option['attribute_id'], array_keys($filterableAttributes))
@@ -114,7 +119,7 @@ class Flagbit_FilterUrls_Model_Rewrite extends Mage_Core_Model_Abstract
         $this->setAttributeCode($filter->getAttributeModel()->getAttributeCode())
             ->setOptionId($optionId)
             ->setRewrite($label)
-            ->setStoreId(Mage::app()->getStore()->getId())
+            ->setStoreId($storeId)
             ->save();
         
         return $this;
