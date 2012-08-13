@@ -43,7 +43,12 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
     {
         $filter = $this->getFilter();
         $category = Mage::registry('current_category');
-        
+
+        $rewrite = Mage::getStoreConfig('web/seo/use_rewrites',Mage::app()->getStore()->getId());
+        if($rewrite == 0) {
+            return parent::getUrl();
+        }
+
         return $this->getSpeakingFilterUrl(true);
     }
     
@@ -57,7 +62,13 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
     {
         $filter = $this->getFilter();
         $category = Mage::registry('current_category');
-        
+
+        $rewrite = Mage::getStoreConfig('web/seo/use_rewrites', Mage::app()->getStore()->getId());
+        if ($rewrite == 0) {
+            return parent::getRemoveUrl();
+        }
+
+
         return $this->getSpeakingFilterUrl(false);
     }
     
