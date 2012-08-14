@@ -126,7 +126,7 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
         
         $params['_query'] = $query;
         
-        return Mage::getModel('core/url')->getDirectUrl($url, array('_query' => $query));;
+        return Mage::getModel('core/url')->getDirectUrl($url, array('_query' => $query));
     }
     
     /**

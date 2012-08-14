@@ -4,3 +4,5 @@
 /cache.properties
 /*.cache.properties
 /.externalToolBuilders
+.idea/
+.DS_Store
