@@ -49,6 +49,10 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
             return parent::getUrl();
         }
 
+        if(!is_object($category)){
+            return parent::getUrl();
+        }
+
         return $this->getSpeakingFilterUrl(true);
     }
     
@@ -68,6 +72,9 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
             return parent::getRemoveUrl();
         }
 
+        if(!is_object($category)){
+            return parent::getUrl();
+        }
 
         return $this->getSpeakingFilterUrl(false);
     }

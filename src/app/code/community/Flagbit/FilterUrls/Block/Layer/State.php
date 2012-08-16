@@ -50,8 +50,12 @@ class Flagbit_FilterUrls_Block_Layer_State extends Mage_Catalog_Block_Layer_Stat
         $params['_query']       = $filterState;
         $params['_escape']      = true;
 
+        $category = Mage::registry('current_category');
+
         $rewrite = Mage::getStoreConfig('web/seo/use_rewrites',Mage::app()->getStore()->getId());
-        if($rewrite == 1) {
+
+        if($rewrite == 1 && is_object($category)) {
+
             $id = Mage::registry('current_category')->getId();
             return Mage::getModel('catalog/category')->load($id)->getUrl();
         }
