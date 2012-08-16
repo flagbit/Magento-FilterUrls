@@ -16,6 +16,8 @@
                     <product_list_toolbar>Flagbit_FilterUrls_Block_Catalog_Product_List_Toolbar</product_list_toolbar>
                     <product_list_toolbar_pager>Flagbit_FilterUrls_Block_Catalog_Product_List_Toolbar_Pager</product_list_toolbar_pager>
                     <layer_state>Flagbit_FilterUrls_Block_Layer_State</layer_state>
+                    <category_view>Flagbit_FilterUrls_Block_Category_View</category_view>
+
 
                 </rewrite>
             </catalog>
