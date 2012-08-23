@@ -23,10 +23,12 @@ class Flagbit_FilterUrls_Block_Category_View extends Mage_Catalog_Block_Category
                 $rewrite = Mage::getStoreConfig('web/seo/use_rewrites',Mage::app()->getStore()->getId());
                 // Rewrite
                 if($rewrite == 1) {
+                    $headBlock->removeItem('link_rel',$category->getUrl());
                     $headBlock->addLinkRel('canonical', Mage::getModel('filterurls/catalog_layer_filter_item')->getSpeakingFilterUrl(FALSE, TRUE));
                 }
                 else{
                     $headBlock->addLinkRel('canonical', $category->getUrl());
+
                 }
             }
             /*
