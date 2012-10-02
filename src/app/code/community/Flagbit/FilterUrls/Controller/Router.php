@@ -78,7 +78,8 @@ class Flagbit_FilterUrls_Controller_Router extends Mage_Core_Controller_Varien_R
         }
         
         // if successfully gained url parameters, use them and dispatch ActionController action
-        $request->setModuleName('catalog')
+        $request->setRouteName('catalog')
+            ->setModuleName('catalog')
             ->setControllerName('category')
             ->setActionName('view')
             ->setParam('id', $parsedRequestInfo['categoryId']);
