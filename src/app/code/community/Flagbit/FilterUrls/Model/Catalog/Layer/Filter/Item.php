@@ -106,14 +106,11 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
             if ($this->getFilter() instanceof Mage_Catalog_Model_Layer_Filter_Attribute) {
                 $position = $this->getFilter()->getAttributeModel()->getPosition();
                 if(isset($filterUrlArray['filterUrl'][$position])){
-                    while(isset($filterUrlArray['filterUrl'][$position])){ // Suche freie Position im Array
+                    while(isset($filterUrlArray['filterUrl'][$position])){ // Search free position in array
                         $position++;
                     }
-                    $filterUrlArray['filterUrl'][$position] = $this->_getRewriteForFilterOption($this->getFilter(), $this->getValue());
                 }
-                else{
-                    $filterUrlArray['filterUrl'][$position] = $this->_getRewriteForFilterOption($this->getFilter(), $this->getValue());
-                }
+                $filterUrlArray['filterUrl'][$position] = $this->_getRewriteForFilterOption($this->getFilter(), $this->getValue());
             }
             else {
                 $query[$this->getFilter()->getRequestVar()] = $this->getValue(); 
