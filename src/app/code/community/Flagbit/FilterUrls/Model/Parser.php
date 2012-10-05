@@ -46,7 +46,7 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
         if ($rewrite && $rewrite->getUrlRewriteId()) {
             return false;
         }
-        
+
         $configUrlSuffix = Mage::getStoreConfig('catalog/seo/category_url_suffix');
         $shortRequestString = substr($requestString, 0, strrpos($requestString, '/')) . $configUrlSuffix;
         $rewrite = Mage::getResourceModel('catalog/url')->getRewriteByRequestPath($shortRequestString, $storeId);
@@ -78,8 +78,21 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
         $params = array();
         $rewriteCollection = Mage::getModel('filterurls/rewrite')
             ->getCollection()
-            ->addFieldToFilter('rewrite', array('in' => $filterInfos));
-        
+            ->addFieldToFilter('rewrite', array('in' => $filterInfos))
+            ->addFieldToFilter('store_id', $storeId);
+
+        // Ugly workaround. If rewrite doesn't exist in the current store view,
+        // search for the rewrite in other store views and take the first.
+        // @todo generate non existing rewrites on every filterurl request
+        if(count($rewriteCollection) == 0)
+        {
+            $rewriteCollection = Mage::getModel('filterurls/rewrite')
+                ->getCollection()
+                ->addFieldToFilter('rewrite', array('in' => $filterInfos));
+
+            $rewriteCollection->getSelect()->group('rewrite');
+        }
+
         if (count($rewriteCollection) == count($filterInfos)) {
             foreach ($rewriteCollection as $rewrite) {
                 $params[$rewrite->getAttributeCode()] = $rewrite->getOptionId();

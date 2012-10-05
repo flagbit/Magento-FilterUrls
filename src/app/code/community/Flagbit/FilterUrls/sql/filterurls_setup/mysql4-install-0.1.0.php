@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS {$this->getTable('filterurls/rewrite')} (
   `rewrite` varchar(40) NOT NULL default '',
   `store_id` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`rewrite_id`),
-  CONSTRAINT `UNQ_FILTERURLS_REWRITE_ATTRIBUTECODE_OPTIONID` UNIQUE (`attribute_code`, `option_id`),
-  CONSTRAINT `UNQ_FILTERURLS_REWRITE_REWRITE` UNIQUE (`rewrite`),
+  CONSTRAINT `UNQ_FILTERURLS_REWRITE_ATTRIBUTECODE_OPTIONID_STOREID` UNIQUE (`attribute_code`, `option_id`, `store_id`),
+  CONSTRAINT `UNQ_FILTERURLS_REWRITE_REWRITE_STOREID` UNIQUE (`rewrite`, `store_id`),
   CONSTRAINT `FK_FILTERURLS_REWRITE_STORE` FOREIGN KEY (`store_id`) REFERENCES `{$this->getTable('core/store')}` (`store_id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Rewrite values for attribute options' AUTO_INCREMENT=1;
 ");
