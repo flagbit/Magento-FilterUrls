@@ -51,10 +51,10 @@ class Flagbit_FilterUrls_Helper_Data extends Mage_Core_Helper_Abstract
 	        'ê'=>'e',  'ë'=>'e',  'ì'=>'i',  'í'=>'i',  'î'=>'i',  'ï'=>'i',  'ð'=>'o',  'ñ'=>'n',  'ò'=>'o',  'ó'=>'o',
 	        'ô'=>'o',  'õ'=>'o',  'ö'=>'oe', 'ø'=>'o',  'ù'=>'u',  'ú'=>'u',  'û'=>'u',  'ý'=>'y',  'þ'=>'b',  'ÿ'=>'y',
 	        'Ŕ'=>'R',  'ŕ'=>'r',  'ü'=>'ue', '/'=>'_',  '-'=>'_',  '&'=>'_',  ' '=>'_',  '('=>'_',  ')'=>'_',  '='=>'_',
-            '__' => '_'
 	    );
 	    
 	    $string = strtr($string, $table);
+        $string = str_replace('__' , '_', $string);
 	    
 	    return $string;
 	}	
