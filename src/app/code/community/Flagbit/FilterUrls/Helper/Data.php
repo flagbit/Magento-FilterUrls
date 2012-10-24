@@ -54,7 +54,7 @@ class Flagbit_FilterUrls_Helper_Data extends Mage_Core_Helper_Abstract
 	    );
 	    
 	    $string = strtr($string, $table);
-        $string = preg_replace('/_[^A-Za-z0-9]|[^A-Za-z0-9]_/U', '_', $string);
+        $string = preg_replace('/_[^A-Za-z0-9]+|[^A-Za-z0-9]+_/', '_', $string);
         $string = trim($string, '_');
 	    
 	    return $string;
