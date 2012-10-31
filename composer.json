@@ -1,0 +1,12 @@
+{
+   "name": "flagbit/magento-filterurls",
+   "type": "magento-module",
+   "description": "Module that adds speaking URLs to layered navigation links",
+   "homepage": "https://github.com/Flagbit/Magento-FilterUrls",
+   "authors": [
+      {
+         "name": "Flagbit GmbH & Co. KG",
+         "email": "info@flagbit.de"
+      }
+   ]
+}
