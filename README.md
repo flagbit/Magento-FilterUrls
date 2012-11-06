@@ -16,3 +16,5 @@ The layer filter items try to load a SEO friendly URL from the database. If it n
 
 An addtional router will take care of the rewrite magic for those special URL's. We use some rewrite's here to hook ourselfs
 into Magento's layered navigation system. So beware of this behavior.
+
+
