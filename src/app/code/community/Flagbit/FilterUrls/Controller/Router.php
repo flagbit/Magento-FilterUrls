@@ -70,6 +70,7 @@ class Flagbit_FilterUrls_Controller_Router extends Mage_Core_Controller_Varien_R
         $identifier = trim($request->getPathInfo(), '/');
         
         // try to gather url parameters from parser.
+        /* @var $parser Flagbit_FilterUrls_Model_Parser */
         $parser = Mage::getModel('filterurls/parser');
         $parsedRequestInfo = $parser->parseFilterInformationFromRequest($identifier, Mage::app()->getStore()->getId());
 
