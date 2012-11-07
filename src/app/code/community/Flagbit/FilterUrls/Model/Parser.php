@@ -25,7 +25,7 @@
  *
  * @category Flagbit_FilterUrls
  * @package Flagbit_FilterUrls
- * @author Michael Türk <tuerk@flagbit.de>
+ * @author Michael Türk <michael.tuerk@flagbit.de>
  * @copyright 2012 Flagbit GmbH & Co. KG (http://www.flagbit.de). All rights served.
  * @license http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
  * @version 0.1.0
@@ -39,6 +39,7 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
      * @param string $requestString The request path string to be parsed.
      * @param int $storeId The current stores id (can be multilingual).
      * @param array|false Returns the array of request parameters on success, false otherwise.
+     * @return mixed
      */
     public function parseFilterInformationFromRequest($requestString, $storeId)
     {

@@ -5,7 +5,7 @@
             <version>0.1.0</version>
         </Flagbit_FilterUrls>
     </modules>
-    
+
     <global>
         <blocks>
             <filterurls>
@@ -46,7 +46,7 @@
                 </rewrite>
             </catalog>
         </models>
-        
+
         <resources>
             <filterurls_setup>
                 <setup>
@@ -68,7 +68,7 @@
                 </connection>
             </filterurls_read>
         </resources>
-        
+
         <events>
             <controller_front_init_routers>
                 <observers>
@@ -77,6 +77,11 @@
                         <class>Flagbit_FilterUrls_Controller_Router</class>
                         <method>addFilterUrlsRouter</method>
                     </filterurls>
+                    <searchurls>
+                        <type>singleton</type>
+                        <class>Flagbit_FilterUrls_Controller_Router_Search</class>
+                        <method>addSearchUrlsRouter</method>
+                    </searchurls>
                 </observers>
             </controller_front_init_routers>
         </events>
