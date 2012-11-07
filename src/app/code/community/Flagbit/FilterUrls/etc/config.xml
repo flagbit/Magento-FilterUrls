@@ -74,13 +74,13 @@
                 <observers>
                     <filterurls>
                         <type>singleton</type>
-                        <class>Flagbit_FilterUrls_Controller_Router</class>
-                        <method>addFilterUrlsRouter</method>
+                        <class>Flagbit_FilterUrls_Controller_Router_Filter</class>
+                        <method>addUrlRouter</method>
                     </filterurls>
                     <searchurls>
                         <type>singleton</type>
                         <class>Flagbit_FilterUrls_Controller_Router_Search</class>
-                        <method>addSearchUrlsRouter</method>
+                        <method>addUrlRouter</method>
                     </searchurls>
                 </observers>
             </controller_front_init_routers>

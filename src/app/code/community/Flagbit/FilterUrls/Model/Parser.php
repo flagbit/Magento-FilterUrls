@@ -31,7 +31,7 @@
  * @version 0.1.0
  * @since 0.1.0
  */
-class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
+interface Flagbit_FilterUrls_Model_Parser
 {
     /**
      * Tries to parse a given request path and return the corresponding request parameters.
@@ -39,76 +39,7 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
      * @param string $requestString The request path string to be parsed.
      * @param int $storeId The current stores id (can be multilingual).
      * @param array|false Returns the array of request parameters on success, false otherwise.
-     * @return mixed
+     * @return Flagbit_FilterUrls_Model_Request_Info
      */
-    public function parseFilterInformationFromRequest($requestString, $storeId)
-    {
-        // case 1: there is a speaking url for current request path -> not our business
-        /** @var $rewrite Mage_Core_Model_Url_Rewrite */
-        $rewrite = Mage::getResourceModel('catalog/url')->getRewriteByRequestPath($requestString, $storeId);
-        if ($rewrite && $rewrite->getUrlRewriteId()) {
-            return false;
-        }
-
-        $configUrlSuffix = Mage::getStoreConfig('catalog/seo/category_url_suffix');
-        $shortRequestString = substr($requestString, 0, strrpos($requestString, '/')) . $configUrlSuffix;
-        $rewrite = Mage::getResourceModel('catalog/url')->getRewriteByRequestPath($shortRequestString, $storeId);
-
-        // case 2: the shortened request path cannot be found as rewrite -> no category -> not our business
-        if (!$rewrite || !$rewrite->getUrlRewriteId() || !$rewrite->getCategoryId()) {
-            return false;
-        }
-
-        // case 3: we have a category. May be our business.
-        $categoryId = $rewrite->getCategoryId();
-        $category = Mage::getModel('catalog/category')->load($categoryId);
-        if (!$category->getId()) {
-            return false;
-        }
-
-        // get last part of the URL - if we have filter base urls the filter options are lowercased and concetenated by
-        // dashes. The standard file extension of catalog pages may have to be removed first.
-        $filterString = substr($requestString, strrpos($requestString, '/') + 1);
-        if (substr($filterString, -strlen($configUrlSuffix)) == $configUrlSuffix) {
-            $filterString = substr($filterString, 0, -strlen($configUrlSuffix));
-        }
-
-        // get different filter option values and active filterable attributes
-        // if one of them is empty, this is not our business
-        $filterInfos = explode('-', $filterString);
-
-        // try to translate filter option values to request parameters using the rewrite models
-        $params = array();
-        /** @var $rewriteCollection Flagbit_FilterUrls_Model_Resource_Mysql4_Rewrite_Collection */
-        $rewriteCollection = Mage::getModel('filterurls/rewrite')
-            ->getCollection()
-            ->addFieldToFilter('rewrite', array('in' => $filterInfos))
-            ->addFieldToFilter('store_id', $storeId);
-
-        // Ugly workaround. If rewrite doesn't exist in the current store view,
-        // search for the rewrite in other store views and take the first.
-        // @todo generate non existing rewrites on every filterurl request
-        if (count($rewriteCollection) == 0) {
-            $rewriteCollection = Mage::getModel('filterurls/rewrite')
-                ->getCollection()
-                ->addFieldToFilter('rewrite', array('in' => $filterInfos));
-
-            $rewriteCollection->getSelect()->group('rewrite');
-        }
-
-        if (count($rewriteCollection) == count($filterInfos)) {
-            /** @var $rewrite Flagbit_FilterUrls_Model_Rewrite */
-            foreach ($rewriteCollection as $rewrite) {
-                $params[$rewrite->getAttributeCode()] = $rewrite->getOptionId();
-            }
-        } else {
-            return false;
-        }
-
-        // return structured result
-        return array(
-            'categoryId' => $categoryId,
-            'additionalParams' => $params
-        );
-    }
+    public function parseFilterInformationFromRequest($requestString, $storeId);
 }
