@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="top.search">
+            <action method="setTemplate">
+                <template>filterurls/search/form.mini.phtml</template>
+            </action>
+        </reference>
+    </default>
+</layout>

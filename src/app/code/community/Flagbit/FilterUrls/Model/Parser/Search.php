@@ -56,7 +56,7 @@ class Flagbit_FilterUrls_Model_Parser_Search extends Varien_Object implements Fl
 
         $path = explode('/', $requestString);
 
-        if (!in_array(self::SEARCH_STRING, $path) && count($path) < 2) {
+        if (!in_array(self::SEARCH_STRING, $path) || count($path) < 2) {
             return $requestInfo;
         }
 
