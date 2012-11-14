@@ -34,9 +34,8 @@ CREATE TABLE IF NOT EXISTS {$this->getTable('filterurls/url')} (
   `attributes` VARCHAR(255) NULL DEFAULT NULL,
   `store_id` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`url_id`),
-  UNIQUE INDEX `UNQ_FILTERURLS_URL_REQUEST_PATH_STORE_ID` (`request_path`, `store_id`),
-  CONSTRAINT `UNQ_FILTERURLS_URL_STOREID` UNIQUE (`url`, `store_id`),
-  CONSTRAINT `FK_FILTERURLS_REWRITE_STORE` FOREIGN KEY (`category_id`) REFERENCES `{$this->getTable('catalog/category')}` (`entity_id`) ON UPDATE CASCADE ON DELETE CASCADE
+  UNIQUE INDEX `UNQ_FILTERURLS_REQUEST_PATH_STORE_ID` (`request_path`, `store_id`),
+  CONSTRAINT `FK_FILTERURLS_URL_CATEGORY` FOREIGN KEY (`category_id`) REFERENCES `{$this->getTable('catalog/category')}` (`entity_id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Generated URLs for rewrite combinations' AUTO_INCREMENT=1;
 ");
 
