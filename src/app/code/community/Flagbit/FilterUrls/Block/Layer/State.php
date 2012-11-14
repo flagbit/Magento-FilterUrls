@@ -14,7 +14,7 @@
 *
 * @category Flagbit_FilterUrls
 * @package Flagbit_FilterUrls
-* @author Michael Türk <tuerk@flagbit.de>
+* @author Michael Türk <michael.tuerk@flagbit.de>
 * @copyright 2012 Flagbit GmbH & Co. KG (http://www.flagbit.de). All rights served.
 * @license http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
 * @version 0.1.0
@@ -25,7 +25,7 @@
  *
  * @category Flagbit_FilterUrls
  * @package Flagbit_FilterUrls
- * @author Damian Luszczymak
+ * @author Damian Luszczymak <damian.luszczymak@flagbit.de>
  * @copyright 2012 Flagbit GmbH & Co. KG (http://www.flagbit.de). All rights served.
  * @license http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
  * @version 0.1.0
