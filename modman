@@ -1,2 +1,4 @@
 src/app/code/community/Flagbit app/code/community/Flagbit
+src/app/design/frontend/base/default/layout/filterurls.xml app/design/frontend/base/default/layout/filterurls.xml
+src/app/design/frontend/base/default/template/filterurls app/design/frontend/base/default/template/filterurls
 src/app/etc/modules/* app/etc/modules

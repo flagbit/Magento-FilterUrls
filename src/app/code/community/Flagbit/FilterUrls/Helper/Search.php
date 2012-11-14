@@ -21,25 +21,32 @@
  * @since 0.1.0
  */
 /**
- * Parser for given url string. Tries to map the string on attribute options to rebuild the underlying parameters.
+ * Helper for simple normalization of strings and translation issues
  *
  * @category Flagbit_FilterUrls
  * @package Flagbit_FilterUrls
- * @author Michael Türk <michael.tuerk@flagbit.de>
+ * @author Michael Türk <tuerk@flagbit.de>
  * @copyright 2012 Flagbit GmbH & Co. KG (http://www.flagbit.de). All rights served.
  * @license http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
  * @version 0.1.0
  * @since 0.1.0
  */
-interface Flagbit_FilterUrls_Model_Parser
+class Flagbit_FilterUrls_Helper_Search extends Mage_CatalogSearch_Helper_Data
 {
     /**
-     * Tries to parse a given request path and return the corresponding request parameters.
+     * Get the search result url.
      *
-     * @param string $requestString The request path string to be parsed.
-     * @param int $storeId The current stores id (can be multilingual).
-     * @param array|false Returns the array of request parameters on success, false otherwise.
-     * @return Flagbit_FilterUrls_Model_Request_Info
+     * return string
      */
-    public function parseFilterInformationFromRequest($requestString, $storeId);
+    public function getResultUrl($query = null)
+    {
+        return $this->_getUrl(Flagbit_FilterUrls_Model_Parser_Search::SEARCH_STRING . '/', array(
+            '_secure' => Mage::app()->getFrontController()->getRequest()->isSecure()
+        ));
+    }
+
+    public function getQueryParamName()
+    {
+        return Flagbit_FilterUrls_Model_Parser_Search::SEARCH_STRING;
+    }
 }

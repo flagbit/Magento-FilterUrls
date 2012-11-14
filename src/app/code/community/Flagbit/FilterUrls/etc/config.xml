@@ -5,7 +5,7 @@
             <version>0.1.0</version>
         </Flagbit_FilterUrls>
     </modules>
-    
+
     <global>
         <blocks>
             <filterurls>
@@ -14,7 +14,8 @@
             <catalog>
                 <rewrite>
                     <product_list_toolbar>Flagbit_FilterUrls_Block_Catalog_Product_List_Toolbar</product_list_toolbar>
-                    <product_list_toolbar_pager>Flagbit_FilterUrls_Block_Catalog_Product_List_Toolbar_Pager</product_list_toolbar_pager>
+                    <product_list_toolbar_pager>Flagbit_FilterUrls_Block_Catalog_Product_List_Toolbar_Pager
+                    </product_list_toolbar_pager>
                     <layer_state>Flagbit_FilterUrls_Block_Layer_State</layer_state>
                     <category_view>Flagbit_FilterUrls_Block_Category_View</category_view>
 
@@ -46,7 +47,7 @@
                 </rewrite>
             </catalog>
         </models>
-        
+
         <resources>
             <filterurls_setup>
                 <setup>
@@ -68,17 +69,32 @@
                 </connection>
             </filterurls_read>
         </resources>
-        
+
         <events>
             <controller_front_init_routers>
                 <observers>
                     <filterurls>
                         <type>singleton</type>
-                        <class>Flagbit_FilterUrls_Controller_Router</class>
-                        <method>addFilterUrlsRouter</method>
+                        <class>Flagbit_FilterUrls_Controller_Router_Filter</class>
+                        <method>addUrlRouter</method>
                     </filterurls>
+                    <searchurls>
+                        <type>singleton</type>
+                        <class>Flagbit_FilterUrls_Controller_Router_Search</class>
+                        <method>addUrlRouter</method>
+                    </searchurls>
                 </observers>
             </controller_front_init_routers>
         </events>
     </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <flagbit_filterurls>
+                    <file>filterurls.xml</file>
+                </flagbit_filterurls>
+            </updates>
+        </layout>
+    </frontend>
 </config>
