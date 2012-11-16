@@ -41,4 +41,13 @@ class Flagbit_FilterUrls_Model_Url extends Mage_Core_Model_Abstract
     {
         $this->_init('filterurls/url');
     }
+
+    /**
+     * @param $requestPath
+     * @return mixed
+     */
+    public function getIdByRequestPath($requestPath)
+    {
+        return $this->getResource()->getIdByRequestPath($requestPath);
+    }
 }

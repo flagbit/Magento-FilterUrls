@@ -64,7 +64,6 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
      */
     public function getRemoveUrl()
     {
-        $filter = $this->getFilter();
         $category = Mage::registry('current_category');
 
         $rewrite = Mage::getStoreConfig('web/seo/use_rewrites', Mage::app()->getStore()->getId());
@@ -141,7 +140,11 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
 
         $params['_query'] = $query;
 
-        if ($addOwnValue && !empty($filterUrlArray['filterUrl'])) {
+        /* @var $url_id Flagbit_FilterUrls_Model_Url */
+        $url_id = Mage::getModel('filterurls/url')->getIdByRequestPath($url);
+
+
+        if (!$url_id && $addOwnValue && !empty($filterUrlArray['filterUrl'])) {
             //save resulting request url to database
             /* @var $urlToStore Flagbit_FilterUrls_Model_Url */
             $urlToStore = Mage::getModel('filterurls/url');
