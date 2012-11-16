@@ -140,10 +140,9 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
 
         $params['_query'] = $query;
 
+        //Do we have already a generated url.
         /* @var $url_id Flagbit_FilterUrls_Model_Url */
         $url_id = Mage::getModel('filterurls/url')->getIdByRequestPath($url);
-
-
         if (!$url_id && $addOwnValue && !empty($filterUrlArray['filterUrl'])) {
             //save resulting request url to database
             /* @var $urlToStore Flagbit_FilterUrls_Model_Url */
