@@ -1,18 +1,26 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <filterurls_sitemap_indggggex>
-        <label>Catalog Seo Sitemap (Common)</label>
-        <remove name="right"/>
-        <remove name="left"/>
-
-        <reference name="root">
-            <action method="setTemplate"><template>page/1column.phtml</template></action>
+    <filterurls_sitemap_index>
+        <label>Filter Seo Sitemap (Filter List)</label>
+        <reference name="head">
+            <action method="setTitle" translate="title" module="catalog"><title>Filter Site Map</title></action>
         </reference>
-        <reference name="content">
-            <block type="page/template_container" name="seo.sitemap.container" template="catalog/seo/sitemap/container.phtml">
-                <block type="page/template_links" name="seo.sitemap.links" as="links" template="page/template/links.phtml"/>
-                <block type="page/html_pager" name="seo.sitemap.pager.top" as="pager_top" template="page/html/pager.phtml"/>
-                <block type="page/html_pager" name="seo.sitemap.pager.bottom" as="pager_bottom" template="page/html/pager.phtml"/>
+        <update handle="catalog_seo_sitemap" />
+        <reference name="seo.sitemap.container">
+            <action method="setTitle" translate="title" module="catalog">
+                <title>Filter</title>
+            </action>
+            <block type="filterurls/seo_sitemap" name="seo.sitemap.sitemap" as="sitemap" after="pager_top"
+                   template="catalog/seo/sitemap.phtml">
+                <action method="bindPager">
+                    <pager>seo.sitemap.pager.top</pager>
+                </action>
+                <action method="bindPager">
+                    <pager>seo.sitemap.pager.bottom</pager>
+                </action>
+                <action method="setItemsTitle" translate="title" module="catalog">
+                    <title>filter</title>
+                </action>
             </block>
         </reference>
     </filterurls_sitemap_index>
