@@ -31,7 +31,7 @@
  * @version 0.1.0
  * @since 0.1.0
  */
-class Flagbit_FilterUrls_Model_Url
+class Flagbit_FilterUrls_Model_Url extends Mage_Core_Model_Abstract
 {
     /**
      * Constructor

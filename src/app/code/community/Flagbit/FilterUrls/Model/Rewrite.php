@@ -117,7 +117,7 @@ class Flagbit_FilterUrls_Model_Rewrite extends Mage_Core_Model_Abstract
             $label .= '_' . $addition;
         }
 
-        //set data, save to databaseich h and return new values
+        //set data, save to database and return new values
         $this->setAttributeCode($filter->getAttributeModel()->getAttributeCode())
             ->setOptionId($optionId)
             ->setRewrite($label)
