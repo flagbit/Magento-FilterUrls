@@ -10,4 +10,5 @@ Vagrant::Config.run do |config|
         config.vm.share_folder "vagrant", "/usr/local/src/vagrant/", "../.vagrant/"
         config.vm.customize ["modifyvm", :id, "--memory", 2048]
         config.vm.customize ["modifyvm", :id, "--name", "Magento FilterUrls"]
+        config.vm.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 end
