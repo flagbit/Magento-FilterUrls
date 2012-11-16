@@ -97,4 +97,16 @@
             </controller_front_init_routers>
         </events>
     </global>
+    <crontab>
+        <jobs>
+            <filterurls_sitemap>
+                <schedule>
+                    <cron_expr>30 1 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>flagbit_filterurls/observer::generateXml</model>
+                </run>
+            </filterurls_sitemap>
+        </jobs>
+    </crontab>
 </config>
