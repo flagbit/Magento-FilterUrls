@@ -5,7 +5,24 @@
             <version>0.2.0</version>
         </Flagbit_FilterUrls>
     </modules>
-    
+    <frontend>
+        <routers>
+            <filterurls>
+                <use>standard</use>
+                <args>
+                    <module>Flagbit_FilterUrls</module>
+                    <frontName>filterurls</frontName>
+                </args>
+            </filterurls>
+        </routers>
+        <layout>
+            <updates>
+                <filterurls>
+                    <file>filterurls.xml</file>
+                </filterurls>
+            </updates>
+        </layout>
+    </frontend>
     <global>
         <blocks>
             <filterurls>
@@ -17,8 +34,6 @@
                     <product_list_toolbar_pager>Flagbit_FilterUrls_Block_Catalog_Product_List_Toolbar_Pager</product_list_toolbar_pager>
                     <layer_state>Flagbit_FilterUrls_Block_Layer_State</layer_state>
                     <category_view>Flagbit_FilterUrls_Block_Category_View</category_view>
-
-
                 </rewrite>
             </catalog>
         </blocks>
@@ -49,7 +64,6 @@
                 </rewrite>
             </catalog>
         </models>
-        
         <resources>
             <filterurls_setup>
                 <setup>
@@ -71,7 +85,6 @@
                 </connection>
             </filterurls_read>
         </resources>
-        
         <events>
             <controller_front_init_routers>
                 <observers>
