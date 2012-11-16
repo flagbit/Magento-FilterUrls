@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <filterurls_sitemap_index>
+        <label>Filter Seo Sitemap (Filter List)</label>
+        <reference name="head">
+            <action method="setTitle" translate="title" module="catalog"><title>Filter Site Map</title></action>
+        </reference>
+        <update handle="catalog_seo_sitemap" />
+        <reference name="seo.sitemap.container">
+            <action method="setTitle" translate="title" module="catalog">
+                <title>Filter</title>
+            </action>
+            <block type="filterurls/seo_sitemap" name="seo.sitemap.sitemap" as="sitemap" after="pager_top"
+                   template="catalog/seo/sitemap.phtml">
+                <action method="bindPager">
+                    <pager>seo.sitemap.pager.top</pager>
+                </action>
+                <action method="bindPager">
+                    <pager>seo.sitemap.pager.bottom</pager>
+                </action>
+                <action method="setItemsTitle" translate="title" module="catalog">
+                    <title>filter</title>
+                </action>
+            </block>
+        </reference>
+    </filterurls_sitemap_index>
+</layout>
