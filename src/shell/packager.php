@@ -14,7 +14,7 @@
  *
  * @category Flagbit_FilterUrls
  * @package Flagbit_FilterUrls
- * @author Michael Türk <michael.tuerk@flagbit.de>
+ * @author Karl Spies <karl.spies@flagbit.de>
  * @copyright 2012 Flagbit GmbH & Co. KG (http://www.flagbit.de). All rights served.
  * @license http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
  * @version 0.1.0
@@ -34,13 +34,13 @@
 require_once 'abstract.php';
 
 /**
- * Flagbit FilterUrl shell script
+ * FilterUrls Packager Shell Script
  *
  * @category Flagbit_FilterUrls
  * @package Flagbit_FilterUrls
  * @author Karl Spies <karl.spies@flagbit.de>
  */
-class Mage_Shell_Filterurls extends Mage_Shell_Abstract
+class Mage_Shell_Packager extends Mage_Shell_Abstract
 {
 
     /**
@@ -49,21 +49,23 @@ class Mage_Shell_Filterurls extends Mage_Shell_Abstract
      */
     public function run()
     {
-        if ($this->getArg('clean')) {
-            echo "clean";
-        } elseif ($this->getArg('sitemap')) {
-            $storeId = $this->getArg('store');
-            if($storeId == false) {
-                echo $this->usageHelp();
-                return;
-            }
-            Mage::app()->setCurrentStore($storeId);
-            /* @var $sitemap Flagbit_FilterUrls_Model_Sitemap */
-            $sitemap = Mage::getModel('filterurls/sitemap');
-            $sitemap->generateXml();
-        } else {
-            echo $this->usageHelp();
-        }
+        /* @var $package Mage_Connect_Model_Extension */
+        $package = Mage::getModel('connect/extension');
+        $data = new Varien_Object();
+        $this->getData('name');
+        $this->getData('channel');
+        $this->getData('license');
+        $this->getData('license_uri');
+        $this->getData('summary');
+        $this->getData('description');
+        $this->getData('version');
+        $this->getData('stability');
+        $this->getData('authors');
+
+        $package->setData($data->getData());
+
+        $package->generatePackageXml();
+        echo $package->getPackageXml();
     }
 
     /**
@@ -73,17 +75,16 @@ class Mage_Shell_Filterurls extends Mage_Shell_Abstract
     public function usageHelp()
     {
         return <<<USAGE
-Usage:  php -f filterurls.php -- [options]
-        php -f filterurls.php --clean
-        php -f filterurls.php --sitemap --store <store_id>
+Usage:  php -f packager.php -- [options]
+        php -f packager.php --clean
+        php -f packager.php --sitemap --store <store_id>
 
-  clean                 Clean Logs
-  sitemap --store <store_id>    Create a sitemap
+  create                Create the package
   help                  This help
 
 USAGE;
     }
 }
 
-$shell = new Mage_Shell_Filterurls();
+$shell = new Mage_Shell_Packager();
 $shell->run();
