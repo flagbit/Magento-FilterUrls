@@ -1,37 +1,44 @@
 <?php
 /**
- * Magento
+ * This file is part of the Flagbit_FilterUrls project.
  *
- * NOTICE OF LICENSE
+ * Flagbit_FilterUrls is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
  *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * This script is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * DISCLAIMER
+ * PHP version 5
  *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category    Mage
- * @package     Mage_Shell
- * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category Flagbit_FilterUrls
+ * @package Flagbit_FilterUrls
+ * @author Michael Türk <michael.tuerk@flagbit.de>
+ * @copyright 2012 Flagbit GmbH & Co. KG (http://www.flagbit.de). All rights served.
+ * @license http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
+ * @version 0.1.0
+ * @since 0.1.0
  */
-
+/**
+ * Helper for simple normalization of strings and translation issues
+ *
+ * @category Flagbit_FilterUrls
+ * @package Flagbit_FilterUrls
+ * @author Karl Spies <karl.spies@flagbit.de>
+ * @copyright 2012 Flagbit GmbH & Co. KG (http://www.flagbit.de). All rights served.
+ * @license http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 require_once 'abstract.php';
 
 /**
- * Magento Test Shell Script
+ * Flagbit FilterUrl shell script
  *
- * @category    Mage
- * @package     Mage_Shell
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @category Flagbit_FilterUrls
+ * @package Flagbit_FilterUrls
+ * @author Karl Spies <karl.spies@flagbit.de>
  */
 class Mage_Shell_Filterurls extends Mage_Shell_Abstract
 {
@@ -70,9 +77,8 @@ Usage:  php -f filterurls.php -- [options]
         php -f filterurls.php --clean
         php -f filterurls.php --sitemap --store <store_id>
 
-  clean                 Clean Logs
   sitemap --store <store_id>    Create a sitemap
-  help                  This help
+  help                          This help
 
 USAGE;
     }

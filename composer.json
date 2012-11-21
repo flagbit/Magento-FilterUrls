@@ -1,12 +1,46 @@
 {
-   "name": "flagbit/magento-filterurls",
-   "type": "magento-module",
-   "description": "Module that adds speaking URLs to layered navigation links",
-   "homepage": "https://github.com/Flagbit/Magento-FilterUrls",
-   "authors": [
-      {
-         "name": "Flagbit GmbH & Co. KG",
-         "email": "info@flagbit.de"
-      }
-   ]
+    "name":"flagbit/filterUrls",
+    "type":"magento-module",
+    "license":"GPL-3.0",
+    "description":"Module that adds speaking URLs to layered navigation links",
+    "homepage":"https://github.com/Flagbit/Magento-FilterUrls",
+    "minimum-stability":"dev",
+    "authors":[
+        {
+            "name":"Michael Türk",
+            "email":"michael.tuerk@flagbit.de"
+        },
+        {
+            "name":"Karl Spies",
+            "email":"karl.spies@flagbit.de"
+        },
+        {
+            "name":"Damian Luszczymak",
+            "email":"damian.luszczymak@flagbit.de"
+        }
+    ],
+    "extras":{
+        "magento_connect":{
+            "channel":"community",
+            "php_min":"5.3.0",
+            "php_max":"6.0.0",
+            "content":[
+                {
+                    "type":"magecommunity",
+                    "structure":"dir",
+                    "path":"Flagbit/FilterUrls"
+                },
+                {
+                    "type":"mageetc",
+                    "structure":"file",
+                    "path":"modules/Flagbit_FilterUrls.xml"
+                },
+                {
+                    "type":"mage",
+                    "structure":"file",
+                    "path":"shell/filterurls.php"
+                }
+            ]
+        }
+    }
 }

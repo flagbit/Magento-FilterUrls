@@ -64,7 +64,7 @@ class Flagbit_FilterUrls_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
         $priority = (string)Mage::getStoreConfig('sitemap/category/priority', $storeId);
         /* @var $collection Flagbit_FilterUrls_Model_Resource_Mysql4_Url_Collection */
         $collection = Mage::getModel('filterurls/url')->getCollection();
-        $collection->addFieldToFilter('store_id',$storeId);
+        $collection->addFieldToFilter('store_id', $storeId);
         foreach ($collection as $item) {
             $xml = sprintf('<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%.1f</priority></url>',
                 htmlspecialchars($baseUrl . $item->getRequestPath()),
@@ -72,7 +72,7 @@ class Flagbit_FilterUrls_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
                 $changefreq,
                 $priority
             );
-            $io->streamWrite($xml.PHP_EOL);
+            $io->streamWrite($xml . PHP_EOL);
         }
         $io->streamWrite('</urlset>');
         $io->streamClose();
@@ -81,5 +81,12 @@ class Flagbit_FilterUrls_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
         $this->save();
 
         return $this;
+    }
+
+    /**
+     * @return int|Mage_Core_Model_Store
+     */
+    public function getStoreId() {
+        return Mage::app()->getStore()->getId();
     }
 }
