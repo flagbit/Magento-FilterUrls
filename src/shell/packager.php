@@ -43,6 +43,12 @@ require_once 'abstract.php';
 class Mage_Shell_Packager extends Mage_Shell_Abstract
 {
 
+    private $_config = null;
+
+    private $_composer = null;
+
+    private $_pathToComposerJson = "";
+
     /**
      * Run script
      *
@@ -51,14 +57,27 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
     {
         if ($this->getArg('composer')) {
             try {
-                /** @var $data Varien_Object */
-                $data = $this->parseComposerJson($this->getArg('composer'));
+                $this->_pathToComposerJson = $this->getArg('composer');
+                $name = $this->getModuleName();
+                $this->getConfig()->setData('name', $name);
+                $this->getConfig()->setData('channel', $this->getChannel());
+                $this->getConfig()->setData('license', $this->getLicense());
+                $this->getConfig()->setData('license_uri', $this->getLicenseUri());
+                $this->getConfig()->setData('summary', $this->getDescription());
+                $this->getConfig()->setData('description', $this->getDescription());
+                $this->getConfig()->setData('version', (string)Mage::getConfig()->getNode()->modules->$name->version);
+                $this->getConfig()->setData('stability', $this->getStability());
+                $this->getConfig()->setData('authors', $this->getAuthors());
+                $this->getConfig()->setData('depends_php_min', $this->getPhpMin());
+                $this->getConfig()->setData('depends_php_max', $this->getPhpMax());
+                $this->getConfig()->setData('contents', $this->getContent());
+
                 //Packager thinks in context of index.php
                 chdir(BP);
                 /* @var $package Mage_Connect_Model_Extension */
                 $package = Mage::getModel('connect/extension');
-                $package->setData($data->getData());
-                echo $package->createPackage();
+                $package->setData($this->getConfig()->getData());
+                $package->createPackage();
                 echo "Package created at: " . Mage::helper('connect')->getLocalPackagesPath() . PHP_EOL;
             } catch (Exception $e) {
                 echo "Errer encountered: " . $e->getMessage() . PHP_EOL;
@@ -68,45 +87,120 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
         } else {
             echo $this->usageHelp();
         }
-
-        $data = new Varien_Object();
-        $name = 'Flagbit_FilterUrls';
-        $data->setData('name', $name);
-        $data->setData('channel', 'community');
-        $data->setData('license', 'GPLv3');
-        $data->setData('license_uri', 'http://opensource.org/licenses/gpl-3.0');
-        $data->setData('summary', 'Eine Zusammenfasssung');
-        $data->setData('description', 'Deine Beschreibung');
-        //TODO: Version aus dem Modul auslesen
-        $data->setData('version', (string)Mage::getConfig()->getNode()->modules->$name->version);
-        //TODO: Aus dem Array auslesen aus Mage_Connect_Model_Extension
-        $data->setData('stability', 'stable');
-
-        $authors = array();
-        $authors["name"] = array("Michael Türk" => "Michael Türk", "Damian Luszczymak" => "Damian Luszczymak", "Karl Spies" => "Karl Spies");
-        $authors["email"] = array("Michael Türk" => "Michael.Tuerk@flagbit.de", "Damian Luszczymak" => "damian.luszczymak@flagbit.de", "Karl Spies" => "Karl.Spies@flagbit.de");
-        $authors["user"] = array("Michael Türk" => "Michael_Tuerk", "Damian Luszczymak" => "Damian_Luszczymak", "Karl Spies" => "Karl_Spies");
-        $data->setData('authors', $authors);
-        $data->setData('depends_php_min', "5.3.0");
-        $data->setData('depends_php_max', "6.0.0");
-
-        $contents = array();
-        //TODO das kann man auch aus dem Name generieren.
-        $contents["target"] = array('magecommunity' => 'magecommunity', 'mageetc' => 'mageetc');
-        $contents["type"] = array('magecommunity' => 'dir', 'mageetc' => 'file');
-        $contents["path"] = array('magecommunity' => 'Flagbit/FilterUrls', 'mageetc' => 'Flagbit_FilterUrls.xml');
-
-        $data->setData('contents', $contents);
-
     }
 
-    public function parseComposerJson($pathToComposerJSON)
+    /**
+     * @return mixed|null
+     */
+    public function getComposerJson()
     {
-        $fileContent = file_get_contents($pathToComposerJSON);
-        $composerConfig = Zend_Json::decode($fileContent);
-        $config = new Varien_Object();
+        if ($this->_composer == null) {
+            $fileContent = file_get_contents($this->getPathToComposerJSON());
+            $this->_composer = Zend_Json::decode($fileContent, Zend_Json::TYPE_OBJECT);
+        }
+        return $this->_composer;
+    }
 
-        return $config;
+    /**
+     * @return null|Varien_Object
+     */
+    public function getConfig()
+    {
+        if ($this->_config == null) {
+            $this->_config = new Varien_Object();
+        }
+        return $this->_config;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToComposerJSON()
+    {
+        return $this->_pathToComposerJson;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModuleName()
+    {
+        $name = $this->getComposerJson()->name;
+        $name = join('_', array_map('ucfirst', explode('/', $name)));
+        return $name;
+    }
+
+    public function getChannel()
+    {
+        return $this->getComposerJson()->extras->magento_connect->channel;
+    }
+
+    public function getAuthors()
+    {
+        $authors = array("name" => array(), "email" => array(), "user" => array());
+        foreach ($this->getComposerJson()->authors as $author) {
+            $authors["name"][$author->name] = $author->name;
+            $authors["email"][$author->name] = $author->email;
+            $authors["user"][$author->name] = strstr(str_replace('.', '_', $author->email), '@', true);
+        }
+        return $authors;
+    }
+
+    public function getContent()
+    {
+        $contents = array("target" => array(), "type" => array(), "path" => array());
+        foreach ($this->getComposerJson()->extras->magento_connect->content as $element) {
+            $contents["target"][$element->type] = $element->type;
+            $contents["type"][$element->type] = $element->structure;
+            $contents["path"][$element->type] = $element->path;
+        }
+        return $contents;
+    }
+
+    public function getLicense()
+    {
+        return $this->getComposerJson()->license;
+    }
+
+    public function getLicenseUri()
+    {
+        return "http://www.spdx.org/licenses/" . $this->getLicense();
+    }
+
+    public function getDescription()
+    {
+        return $this->getComposerJson()->description;
+    }
+
+    public function getStability()
+    {
+        $name = "minimum-stability";
+        switch ($this->getComposerJson()->$name) {
+            case "dev":
+                $stability = "devel";
+                break;
+            case "alpha":
+                $stability = "alpha";
+                break;
+            case "beta":
+                $stability = "beta";
+                break;
+            case "RC" :
+            case "stable":
+            default:
+                $stability = "stable";
+        }
+        return $stability;
+    }
+
+    public function getPhpMin()
+    {
+        return $this->getComposerJson()->extras->magento_connect->php_min;
+    }
+
+    public function getPhpMax()
+    {
+        return $this->getComposerJson()->extras->magento_connect->php_max;
     }
 
     /**

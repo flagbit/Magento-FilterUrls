@@ -77,9 +77,8 @@ Usage:  php -f filterurls.php -- [options]
         php -f filterurls.php --clean
         php -f filterurls.php --sitemap --store <store_id>
 
-  clean                 Clean Logs
   sitemap --store <store_id>    Create a sitemap
-  help                  This help
+  help                          This help
 
 USAGE;
     }
