@@ -12,7 +12,7 @@ into
 Mechanism
 ---------
 
-The layer filter items try to load a SEO friendly URL from the database. If it not exists it will be created automatically.
+The layer filter items try to load a SEO friendly URL from the database. If it does not exists it will be created automatically.
 
-An addtional router will take care of the rewrite magic for those special URL's. We use some rewrite's here to hook ourselfs
+An addtional router will take care of the rewrite magic for those special URLs. We use some rewrites here to hook ourselfs
 into Magento's layered navigation system. So beware of this behavior.
