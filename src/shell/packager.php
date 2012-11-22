@@ -21,7 +21,7 @@
  * @since 0.1.0
  */
 /**
- * Helper for simple normalization of strings and translation issues
+ * Packager script to build a magento connect 2.0 packages.
  *
  * @category Flagbit_FilterUrls
  * @package Flagbit_FilterUrls
@@ -51,7 +51,6 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
 
     /**
      * Run script
-     *
      */
     public function run()
     {
@@ -90,6 +89,8 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
     }
 
     /**
+     * Get JSON file as PHP object.
+     *
      * @return mixed|null
      */
     public function getComposerJson()
@@ -102,6 +103,8 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
     }
 
     /**
+     * Get the config storage.
+     *
      * @return null|Varien_Object
      */
     public function getConfig()
@@ -113,6 +116,8 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
     }
 
     /**
+     * Get the path to composer json file.
+     *
      * @return string
      */
     public function getPathToComposerJSON()
@@ -121,6 +126,8 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
     }
 
     /**
+     * Parse module name out of composer module name file.
+     *
      * @return string
      */
     public function getModuleName()
@@ -130,11 +137,21 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
         return $name;
     }
 
+    /**
+     * Get magento connect channel.
+     *
+     * @return mixed
+     */
     public function getChannel()
     {
         return $this->getComposerJson()->extras->magento_connect->channel;
     }
 
+    /**
+     * Get authors.
+     *
+     * @return array
+     */
     public function getAuthors()
     {
         $authors = array("name" => array(), "email" => array(), "user" => array());
@@ -146,6 +163,11 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
         return $authors;
     }
 
+    /**
+     * Get file mappings.
+     *
+     * @return array
+     */
     public function getContent()
     {
         $contents = array("target" => array(), "type" => array(), "path" => array());
@@ -157,21 +179,41 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
         return $contents;
     }
 
+    /**
+     * Get license.
+     *
+     * @return mixed
+     */
     public function getLicense()
     {
         return $this->getComposerJson()->license;
     }
 
+    /**
+     * Generate license uri.
+     *
+     * @return string
+     */
     public function getLicenseUri()
     {
         return "http://www.spdx.org/licenses/" . $this->getLicense();
     }
 
+    /**
+     * Get description for the project.
+     *
+     * @return mixed
+     */
     public function getDescription()
     {
         return $this->getComposerJson()->description;
     }
 
+    /**
+     * Get the stability out of composer.
+     *
+     * @return string
+     */
     public function getStability()
     {
         $name = "minimum-stability";
@@ -193,11 +235,21 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
         return $stability;
     }
 
+    /**
+     * Minimum PHP version to run the module.
+     *
+     * @return mixed
+     */
     public function getPhpMin()
     {
         return $this->getComposerJson()->extras->magento_connect->php_min;
     }
 
+    /**
+     * Maximum PHP version to run the module.
+     *
+     * @return mixed
+     */
     public function getPhpMax()
     {
         return $this->getComposerJson()->extras->magento_connect->php_max;
