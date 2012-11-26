@@ -36,7 +36,7 @@ class Flagbit_FilterUrls_Helper_Data extends Mage_Core_Helper_Abstract
    /**
 	 * normalize Characters
 	 * Example: ü -> ue
-	 * 
+	 *
 	 * @param string $string
 	 * @return string
 	 */
@@ -51,12 +51,13 @@ class Flagbit_FilterUrls_Helper_Data extends Mage_Core_Helper_Abstract
 	        'ê'=>'e',  'ë'=>'e',  'ì'=>'i',  'í'=>'i',  'î'=>'i',  'ï'=>'i',  'ð'=>'o',  'ñ'=>'n',  'ò'=>'o',  'ó'=>'o',
 	        'ô'=>'o',  'õ'=>'o',  'ö'=>'oe', 'ø'=>'o',  'ù'=>'u',  'ú'=>'u',  'û'=>'u',  'ý'=>'y',  'þ'=>'b',  'ÿ'=>'y',
 	        'Ŕ'=>'R',  'ŕ'=>'r',  'ü'=>'ue', '/'=>'_',  '-'=>'_',  '&'=>'_',  ' '=>'_',  '('=>'_',  ')'=>'_',  '='=>'_',
+            '"'=>'_'
 	    );
-	    
+
 	    $string = strtr($string, $table);
         $string = preg_replace('/_[^A-Za-z0-9]+|[^A-Za-z0-9]+_/', '_', $string);
         $string = trim($string, '_');
-	    
+
 	    return $string;
-	}	
+	}
 }
