@@ -36,6 +36,11 @@
                     <category_view>Flagbit_FilterUrls_Block_Category_View</category_view>
                 </rewrite>
             </catalog>
+            <page>
+                <rewrite>
+                    <html_pager>Flagbit_FilterUrls_Block_Page_Html_Pager</html_pager>
+                </rewrite>
+            </page>
         </blocks>
         <helpers>
             <filterurls>
