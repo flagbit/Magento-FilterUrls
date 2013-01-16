@@ -144,7 +144,7 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
      */
     public function getChannel()
     {
-        return $this->getComposerJson()->extras->magento_connect->channel;
+        return $this->getComposerJson()->extra->magento_connect->channel;
     }
 
     /**
@@ -171,7 +171,7 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
     public function getContent()
     {
         $contents = array("target" => array(), "type" => array(), "path" => array());
-        foreach ($this->getComposerJson()->extras->magento_connect->content as $element) {
+        foreach ($this->getComposerJson()->extra->magento_connect->content as $element) {
             $contents["target"][$element->type] = $element->type;
             $contents["type"][$element->type] = $element->structure;
             $contents["path"][$element->type] = $element->path;
@@ -242,7 +242,7 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
      */
     public function getPhpMin()
     {
-        return $this->getComposerJson()->extras->magento_connect->php_min;
+        return $this->getComposerJson()->extra->magento_connect->php_min;
     }
 
     /**
@@ -252,7 +252,7 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
      */
     public function getPhpMax()
     {
-        return $this->getComposerJson()->extras->magento_connect->php_max;
+        return $this->getComposerJson()->extra->magento_connect->php_max;
     }
 
     /**
