@@ -18,6 +18,9 @@
             "email":"damian.luszczymak@flagbit.de"
         }
     ],
+    "require":{
+        "magento-hackathon/magento-composer-installer":"*"
+    },
     "extras":{
         "magento_connect":{
             "channel":"community",
