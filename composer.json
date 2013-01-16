@@ -21,7 +21,7 @@
     "require":{
         "magento-hackathon/magento-composer-installer":"*"
     },
-    "extras":{
+    "extra":{
         "magento_connect":{
             "channel":"community",
             "php_min":"5.3.0",
