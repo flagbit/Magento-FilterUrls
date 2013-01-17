@@ -216,8 +216,7 @@ class Mage_Shell_Packager extends Mage_Shell_Abstract
      */
     public function getStability()
     {
-        $name = "minimum-stability";
-        switch ($this->getComposerJson()->$name) {
+        switch ($this->getComposerJson()->extra->magento_connect->stability) {
             case "dev":
                 $stability = "devel";
                 break;
