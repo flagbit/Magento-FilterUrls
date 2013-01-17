@@ -26,6 +26,7 @@
             "channel":"community",
             "php_min":"5.3.0",
             "php_max":"6.0.0",
+            "stability":"beta",
             "content":[
                 {
                     "type":"magecommunity",
