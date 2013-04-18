@@ -31,6 +31,12 @@ class Flagbit_FilterUrls_Block_Category_View extends Mage_Catalog_Block_Category
 
                 }
             }
+
+            if(Mage::registry('filterurls_active') === true)
+            {
+                $headBlock->setRobots('noindex,nofollow');
+            }
+
             /*
             want to show rss feed in the url
             */
