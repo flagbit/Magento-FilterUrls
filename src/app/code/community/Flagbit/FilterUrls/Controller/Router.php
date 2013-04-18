@@ -77,6 +77,8 @@ class Flagbit_FilterUrls_Controller_Router extends Mage_Core_Controller_Varien_R
         if (!$parsedRequestInfo) {
             return false;
         }
+
+        Mage::register('filterurls_active',true);
         
         // if successfully gained url parameters, use them and dispatch ActionController action
         $request->setRouteName('catalog')
