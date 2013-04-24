@@ -43,7 +43,7 @@ class Flagbit_FilterUrls_Block_Seo_Sitemap extends Mage_Catalog_Block_Seo_Sitema
             $name = str_replace('/', ' ', $item->getRequestPath());
             $name = str_replace('_', ' ', $name);
             $name = str_replace('-', ' ', $name);
-            $name = str_replace(Mage::getStoreConfig('catalog/seo/category_url_suffix'), '', $name);
+            $name = str_replace(Mage::helper('filterurls')->getUrlSuffix(), '', $name);
             $item->setName(uc_words($name));
         }
         $this->setCollection($collection);
