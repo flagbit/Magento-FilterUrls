@@ -67,4 +67,16 @@ class Flagbit_FilterUrls_Helper_Data extends Mage_Catalog_Helper_Product_Url
         $string = trim($string, '_');
         return $string;
     }
+
+    public function getUrlSuffix()
+    {
+        $suffix = '';
+        if(Mage::helper('core')->isModuleEnabled('Enterprise_Catalog'))
+        {
+            $suffix .= '.';
+        }
+        $suffix .= Mage::getStoreConfig('catalog/seo/category_url_suffix');
+
+        return $suffix;
+    }
 }

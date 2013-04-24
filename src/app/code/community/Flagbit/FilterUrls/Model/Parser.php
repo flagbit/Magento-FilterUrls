@@ -33,6 +33,8 @@
  */
 class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
 {
+    const CATEGORY_VIEW_REQUEST_STRING = 'catalog/category/view';
+
     /**
      * Tries to parse a given request path and return the corresponding request parameters.
      *
@@ -42,31 +44,14 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
      */
     public function parseFilterInformationFromRequest($requestString, $storeId)
     {
-        // case 1: there is a speaking url for current request path -> not our business
-        /** @var $rewrite Mage_Core_Model_Url_Rewrite */
-        $rewrite = Mage::getResourceModel('catalog/url')->getRewriteByRequestPath($requestString, $storeId);
-        if ($rewrite && $rewrite->getUrlRewriteId()) {
-            return false;
-        }
-
-        $configUrlSuffix = Mage::getStoreConfig('catalog/seo/category_url_suffix');
-        $shortRequestString = substr($requestString, 0, strrpos($requestString, '/')) . $configUrlSuffix;
-        $rewrite = Mage::getResourceModel('catalog/url')->getRewriteByRequestPath($shortRequestString, $storeId);
-
-        // case 2: the shortened request path cannot be found as rewrite -> no category -> not our business
-        if (!$rewrite || !$rewrite->getUrlRewriteId() || !$rewrite->getCategoryId()) {
-            return false;
-        }
-
-        // case 3: we have a category. May be our business.
-        $categoryId = $rewrite->getCategoryId();
-        $category = Mage::getModel('catalog/category')->load($categoryId);
-        if (!$category->getId()) {
+        $categoryId = $this->_getCategoryIdByRequestString($requestString, $storeId);
+        if(!$categoryId) {
             return false;
         }
 
         // get last part of the URL - if we have filter base urls the filter options are lowercased and concetenated by
         // dashes. The standard file extension of catalog pages may have to be removed first.
+        $configUrlSuffix = Mage::helper('filterurls')->getUrlSuffix();
         $filterString = substr($requestString, strrpos($requestString, '/') + 1);
         if (substr($filterString, -strlen($configUrlSuffix)) == $configUrlSuffix) {
             $filterString = substr($filterString, 0, -strlen($configUrlSuffix));
@@ -109,5 +94,66 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
             'categoryId' => $categoryId,
             'additionalParams' => $params
         );
+    }
+
+    protected function _getCategoryIdByRequestString($requestString, $storeId)
+    {
+        $categoryId = null;
+        $request = Mage::app()->getRequest();
+
+        $configUrlSuffix = Mage::helper('filterurls')->getUrlSuffix();
+        $shortRequestString = substr($requestString, 0, strrpos($requestString, '/')) . $configUrlSuffix;
+
+        // case 1: if enterprise is running, we need to handle things different
+        if(Mage::helper('core')->isModuleEnabled('Enterprise_UrlRewrite'))
+        {
+            $origRequestUri = $request->getRequestUri();
+            $origPathInfo = $request->getPathInfo();
+
+            // emulate new enterprise rewrite stuff
+            $request->setPathInfo($shortRequestString);
+            Mage::getModel('enterprise_urlrewrite/url_rewrite_request')->rewrite();
+
+            // if we're on a category, we directly get the native url (new enterprise rewrite stuff)
+            if(strpos($request->getPathInfo(), self::CATEGORY_VIEW_REQUEST_STRING) !== FALSE)
+            {
+                if(preg_match('/id\/([0-9]+)/', $request->getPathInfo(), $matches))
+                {
+                    $categoryId = $matches[1];
+                }
+            }
+
+            $request->setRequestUri($origRequestUri);
+            $request->setPathInfo($origPathInfo);
+        }
+
+        if(!$categoryId)
+        {
+            // case 2: there is a speaking url for current request path -> not our business
+            /** @var $rewrite Mage_Core_Model_Url_Rewrite */
+            $rewrite = Mage::getResourceModel('catalog/url')->getRewriteByRequestPath($requestString, $storeId);
+            if ($rewrite && $rewrite->getUrlRewriteId())
+            {
+                return false;
+            }
+
+            $rewrite = Mage::getResourceModel('catalog/url')->getRewriteByRequestPath($shortRequestString, $storeId);
+
+            // case 3: the shortened request path cannot be found as rewrite -> no category -> not our business
+            if (!$rewrite || !$rewrite->getUrlRewriteId() || !$rewrite->getCategoryId())
+            {
+                return false;
+            }
+
+            $categoryId = $rewrite->getCategoryId();
+        }
+
+        // case 4: we have a category. May be our business.
+        if (!Mage::getResourceModel('catalog/category')->checkId($categoryId))
+        {
+            return false;
+        }
+
+        return $categoryId;
     }
 }
