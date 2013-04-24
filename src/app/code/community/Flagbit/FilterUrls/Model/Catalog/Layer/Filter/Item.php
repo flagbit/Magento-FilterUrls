@@ -128,7 +128,7 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
         $url = preg_replace('/\?.*/', '', $url);
 
         if (!empty($filterUrlString)) {
-            $configUrlSuffix = Mage::getStoreConfig('catalog/seo/category_url_suffix');
+            $configUrlSuffix = Mage::helper('filterurls')->getUrlSuffix();
 
             if (substr($url, -strlen($configUrlSuffix)) == $configUrlSuffix) {
                 $url = substr($url, 0, -strlen($configUrlSuffix));
