@@ -49,6 +49,8 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
             return false;
         }
 
+        $configUrlSuffix = Mage::helper('filterurls')->getUrlSuffix();
+
         // get last part of the URL - if we have filter base urls the filter options are lowercased and concetenated by
         // dashes. The standard file extension of catalog pages may have to be removed first.
         $configUrlSuffix = Mage::helper('filterurls')->getUrlSuffix();
