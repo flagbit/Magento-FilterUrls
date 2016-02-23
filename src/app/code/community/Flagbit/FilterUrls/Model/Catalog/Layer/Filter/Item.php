@@ -127,6 +127,16 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
         }
         $url = preg_replace('/\?.*/', '', $url);
 
+        if($addOwnValue && $this->getFilter()->getRequestVar() == "cat") {
+            $category_url = Mage::getModel('catalog/category')->load($this->getValue())->getUrl();
+            $return = $category_url;
+            unset($query[$this->getFilter()->getRequestVar()]);
+            $url = str_replace(Mage::getStoreConfig('web/unsecure/base_url'), '', $return);
+        }
+
+        $storeCode = Mage::app()->getStore()->getCode();
+        $url = preg_replace('!^' . $storeCode . '/!', '', $url);
+
         if (!empty($filterUrlString)) {
             $configUrlSuffix = Mage::helper('filterurls')->getUrlSuffix();
 
