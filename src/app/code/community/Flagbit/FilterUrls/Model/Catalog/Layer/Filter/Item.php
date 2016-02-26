@@ -117,7 +117,7 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
 
 
         ksort($filterUrlArray['filterUrl']);
-        $filterUrlString = implode('-', $filterUrlArray['filterUrl']);
+        $filterUrlString = implode('-', array_filter($filterUrlArray['filterUrl']));
 
         //replace url with category url
         if(Mage::registry('current_category') != null) {
