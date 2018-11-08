@@ -25,7 +25,7 @@
         "magento_connect":{
             "channel":"community",
             "php_min":"5.3.0",
-            "php_max":"6.0.0",
+            "php_max":"7.3.0",
             "stability":"beta",
             "content":[
                 {
