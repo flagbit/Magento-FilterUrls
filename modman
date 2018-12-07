@@ -2,4 +2,3 @@ src/app/code/community/Flagbit/FilterUrls app/code/community/Flagbit/FilterUrls
 src/app/design/frontend/base/default/layout/* app/design/frontend/base/default/layout/
 src/app/etc/modules/* app/etc/modules
 src/shell/* shell
-packager/src/shell/* shell
