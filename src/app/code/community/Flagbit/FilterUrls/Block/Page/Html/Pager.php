@@ -40,7 +40,7 @@ class Flagbit_FilterUrls_Block_Page_Html_Pager extends Mage_Page_Block_Html_Page
             return parent::getPagerUrl($params);
         }
 
-        $url = Mage::getModel('filterurls/catalog_layer_filter_item')->getSpeakingFilterUrl(FALSE, TRUE, $params);
+        $url = Mage::getModel('filterurls/catalog_layer_filter_item')->getSpeakingFilterUrl(false, true, $params);
         return $url;
     }
 }
