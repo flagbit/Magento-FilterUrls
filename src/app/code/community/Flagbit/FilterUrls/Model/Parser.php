@@ -117,7 +117,7 @@ class Flagbit_FilterUrls_Model_Parser extends Mage_Core_Model_Abstract
             Mage::getModel('enterprise_urlrewrite/url_rewrite_request')->rewrite();
 
             // if we're on a category, we directly get the native url (new enterprise rewrite stuff)
-            if(strpos($request->getPathInfo(), self::CATEGORY_VIEW_REQUEST_STRING) !== FALSE)
+            if(strpos($request->getPathInfo(), self::CATEGORY_VIEW_REQUEST_STRING) !== false)
             {
                 if(preg_match('/id\/([0-9]+)/', $request->getPathInfo(), $matches))
                 {

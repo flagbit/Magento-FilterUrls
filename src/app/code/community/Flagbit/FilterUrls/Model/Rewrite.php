@@ -80,7 +80,7 @@ class Flagbit_FilterUrls_Model_Rewrite extends Mage_Core_Model_Abstract
     public function generateNewRewrite($filter, $optionId, $storeId)
     {
         if (empty($filter) || !(int)$optionId) {
-            return FALSE;
+            return false;
         }
 
         // load option from option_id
@@ -100,7 +100,7 @@ class Flagbit_FilterUrls_Model_Rewrite extends Mage_Core_Model_Abstract
         if (!in_array($option['attribute_id'], array_keys($filterableAttributes))
             || $filterableAttributes[$option['attribute_id']]->getAttributeCode() != $filter->getAttributeModel()->getAttributeCode()
         ) {
-            return FALSE;
+            return false;
         }
 
         // get normalized and lowercased version of the options label

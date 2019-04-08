@@ -24,7 +24,7 @@ class Flagbit_FilterUrls_Block_Category_View extends Mage_Catalog_Block_Category
                 // Rewrite
                 if($rewrite == 1) {
                     $headBlock->removeItem('link_rel',$category->getUrl());
-                    $headBlock->addLinkRel('canonical', Mage::getModel('filterurls/catalog_layer_filter_item')->getSpeakingFilterUrl(FALSE, TRUE));
+                    $headBlock->addLinkRel('canonical', Mage::getModel('filterurls/catalog_layer_filter_item')->getSpeakingFilterUrl(false, true));
                 }
                 else{
                     $headBlock->addLinkRel('canonical', $category->getUrl());

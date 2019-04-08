@@ -48,7 +48,7 @@ class Flagbit_FilterUrls_Block_Catalog_Product_List_Toolbar extends Mage_Catalog
             return parent::getPagerUrl($params);
         }
 
-        $url = Mage::getModel('filterurls/catalog_layer_filter_item')->getSpeakingFilterUrl(FALSE, TRUE, $params);
+        $url = Mage::getModel('filterurls/catalog_layer_filter_item')->getSpeakingFilterUrl(false, true, $params);
         return $url; 
     }
 }

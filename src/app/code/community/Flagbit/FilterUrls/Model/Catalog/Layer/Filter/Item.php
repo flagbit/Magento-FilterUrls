@@ -92,7 +92,7 @@ class Flagbit_FilterUrls_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Mo
      * @param boolean $withoutFilter To gain access to the link generation without actually having an attribute model, this switch can be set to TRUE.
      * @param array $additionalQueryParams To pass additional query parameters to the resulting link, this parameter can be used.
      */
-    public function getSpeakingFilterUrl($addOwnValue, $withoutFilter = FALSE, $additionalQueryParams = array())
+    public function getSpeakingFilterUrl($addOwnValue, $withoutFilter = false, $additionalQueryParams = array())
     {
         $filterUrlArray = $this->_getFilterUrlArrayForCurrentState($withoutFilter);
 
